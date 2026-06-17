@@ -73,13 +73,21 @@ def parse_cmdline():
 #-------------------------------------------------------------------------
 # Models
 #-------------------------------------------------------------------------
+my_model=os.environ.get("OPENAI_API_MODEL")
+if not my_model:
+  print("No OPENAI_API_MODEL!!!!!!!!")
+  exit(999)
 
 openai_models = [
   "gpt-3.5-turbo",
   "gpt-4",
   "gpt-4-turbo",
   "gpt-4o",
+  
 ]
+
+if my_model not in openai_models:
+  openai_models.append(my_model)
 
 nim_chat_models = [
   "ai-llama2-70b",
@@ -109,6 +117,9 @@ model_aliases = {
   "ai-llama-3_1-70b-instruct": "meta/llama-3.1-70b-instruct",
   "ai-llama-3_1-405b-instruct": "meta/llama-3.1-405b-instruct"
 }
+
+if my_model not in model_aliases.keys():
+  model_aliases[my_model]=my_model
 
 models_to_repeat_system_to_human_messages = [
   "ai-mistral-large"
